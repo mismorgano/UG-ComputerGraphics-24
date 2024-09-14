@@ -1,5 +1,10 @@
+#define GLFW_INCLUDE_NONE
+
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream> 
+#include <iostream>
+
+
 int main() {
     /* Initialize the library */
     if (!glfwInit())
@@ -14,8 +19,20 @@ int main() {
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+    // We need to initialize glad in order to use OpenGL
+    gladLoadGL();
 
-    std::cout << glGetString(GL_VERSION) <<std::endl;
+    std::cout << glGetString(GL_VERSION) << std::endl;
+
+    float vertices[] = {
+        -0.5f, -0.5f,
+        0.0f, 0.5f,
+        0.5f, -0.5f
+    };
+    unsigned int buffer; // It's the ID
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, 6*sizeof(float), vertices, GL_STATIC_DRAW);
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
@@ -23,12 +40,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw triangle
-        glBegin(GL_TRIANGLES);
-        glVertex2d(-0.5f, -0.5f);
-        glVertex2d(0.0f, 0.5f);
-        glVertex2d(0.5f, -0.5f);
-        glEnd();
-
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
