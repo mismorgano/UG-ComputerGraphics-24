@@ -27,7 +27,7 @@ cmake -S . -B build
 ```
 Para configurar el proyecto, y
 ```
-cmkae --build build
+cmake --build build
 ```
 para construirlo.
 
